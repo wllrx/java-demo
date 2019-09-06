@@ -9,4 +9,8 @@ public class UserTest {
         System.out.println(" 进入UserTest的send()方法.......");
     }
 
+    public void methods(){
+        System.out.println("进入UserTest的methods()方法......");
+    }
+
 }

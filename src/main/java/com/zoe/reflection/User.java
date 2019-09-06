@@ -27,7 +27,7 @@ public class User {
     @Reflect(name = "11111",max = 99)
     private Integer age;
 
-    @Reflect(name = "2222")
+    @Reflect(name = "2222",min = 11)
     private Integer num;
 
     @Reflect(name = "33333")
