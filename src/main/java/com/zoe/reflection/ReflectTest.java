@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 /**
  * @author Zoe
+ *
  **/
 public class ReflectTest {
     public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
@@ -18,9 +19,11 @@ public class ReflectTest {
 
         Method[] methods = UserTest.class.getMethods();
 
-        Arrays.stream(methods).map(Method::getName).filter(e-> e.equals("methods")).forEach(System.out::println);
+        Arrays.stream(methods).map(Method::getName).forEach(System.out::println);
 
         Method send = UserTest.class.getMethod("send");
+
+        System.out.println("send的参数为: "+ send);
 
         send.invoke(UserTest.class.newInstance());
 
