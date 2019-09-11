@@ -5,7 +5,7 @@ package com.zoe.test;
  **/
 public class StringTest {
     public static void main(String[] args) {
-
+        //只有字符串常量是共享的,+和substring操作的字符串结果并不是共享的,在比较时需采用equals
         String s = "hello";
         //返回指定索引处的值
         char a = s.charAt(0);
@@ -19,7 +19,7 @@ public class StringTest {
         //按照字典顺序,字符串位于anotherString之前,返回负数,之后返回正数,相等返回0
         int d = s.compareTo("a");
         System.out.println("d的值为: "+d);
-
-
+        String e = s.substring(4);
+        System.out.println("e的值为: "+e);
     }
 }
