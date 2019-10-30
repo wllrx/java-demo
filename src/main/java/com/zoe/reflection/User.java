@@ -5,64 +5,40 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
- * @author Zoe
+ * @author zoe
  **/
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class User {
-
-    private String name;
-
-    private String city;
-
-    @Reflect(name = "11111",max = 99)
-    private Integer age;
-
-    @Reflect(name = "2222",min = 11)
-    private Integer num;
-
-    @Reflect(name = "33333")
-    private Double results;
+@Inject(name = "反射测试",number = 80)
+class User {
+    @Tag(limit = 10,TYPE = TagType.ONE)
+    private String account;
+    @Tag(limit = 20,TYPE = TagType.TWO)
+    private String accountPassword;
+    @Tag(limit = 30,TYPE = TagType.THREE)
+    private String userName;
+    @Tag(limit = 40,TYPE = TagType.FORE)
+    private String userPhone;
+    @Tag(limit = 50,TYPE = TagType.FIVE)
+    private String userEmail;
+    @Tag(limit = 60,TYPE = TagType.SEX)
+    private Long roleId;
+    @Tag(limit = 70,TYPE = TagType.SERVER)
+    private Long customerId;
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", age=" + age +
-                ", num=" + num +
-                ", results=" + results +
+                "account='" + account + '\'' +
+                ", accountPassword='" + accountPassword + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", roleId=" + roleId +
+                ", customerId=" + customerId +
                 '}';
-    }
-
-    public static void main(String[] args) {
-
-        //获取user所有的字段
-        Field[] fields = User.class.getDeclaredFields();
-        System.out.println("User类中所有字段: "+Arrays.toString(fields));
-        //获取所有带@Reflect注解的字段
-        List<Field> reflections = Arrays.stream(fields)
-                .filter(e -> e.isAnnotationPresent(Reflect.class))
-                .collect(Collectors.toList());
-
-        System.out.println("User类中带有@Reflect注解字段: "+reflections);
-
-        //获取注解字段及name值
-        Map<String, Field> hasAnnotationFieldMap = Arrays.stream(User.class.getDeclaredFields())
-                .filter(f -> f.isAnnotationPresent(Reflect.class))
-                .collect(Collectors.toMap(field -> field.getAnnotation(Reflect.class).name(), field -> field)
-                );
-
-        System.out.println("User类中带有@Reflect注解的字段以及name值"+hasAnnotationFieldMap);
-
     }
 }

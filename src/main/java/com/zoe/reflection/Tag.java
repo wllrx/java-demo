@@ -6,16 +6,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author Zoe
+ * @author zoe
  **/
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Reflect {
-
-    int max() default 1000;
-
-    int min() default 10;
-
-    String name();
+public @interface Tag {
+    int limit() default 10;
+    TagType TYPE() default TagType.ONE;
+}
+/**
+ * TagType
+ */
+enum TagType{
+    ONE,TWO,THREE,FORE,FIVE,SEX,SERVER;
 }
