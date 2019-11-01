@@ -3,7 +3,9 @@ package com.zoe.java8;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+
 
 /**
  * @author zoe
@@ -20,7 +22,7 @@ public class Sample9 {
                 new Dish("pizza", true, 550, Dish.Type.OTHER),
                 new Dish("prawns", false, 300, Dish.Type.FISH),
                 new Dish("salmon", false, 450, Dish.Type.FISH));
-        long howManyDishes = menu.stream().collect(Collectors.counting());
+        long howManyDishes = menu.stream().collect(counting());
         System.out.println("统计菜单多少菜howManyDishes: " + howManyDishes);
         long howManyDishes1 = menu.stream().count();
         System.out.println("统计菜单多少菜howManyDishes1: " + howManyDishes1);
@@ -88,15 +90,22 @@ public class Sample9 {
         Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel = menu
                 .stream()
                 .collect(groupingBy(Dish::getType, groupingBy(dish -> {
-            if (dish.getCalories() <= 400) {
-                return CaloricLevel.DIET;
-            } else if (dish.getCalories() <= 700) {
-                return CaloricLevel.NORMAL;
-            } else {
-                return CaloricLevel.FAT;
-            }
-        })));
-        System.out.println("多级分组,根据类型和热量分组: "+dishesByTypeCaloricLevel);
+                    if (dish.getCalories() <= 400) {
+                        return CaloricLevel.DIET;
+                    } else if (dish.getCalories() <= 700) {
+                        return CaloricLevel.NORMAL;
+                    } else {
+                        return CaloricLevel.FAT;
+                    }
+                })));
+        System.out.println("多级分组,根据类型和热量分组: " + dishesByTypeCaloricLevel);
+        //分组统计每个类型的菜有多少个
+        Map<Dish.Type, Long> typesCount = menu
+                .stream()
+                .collect(groupingBy(Dish::getType, counting()));
+        System.out.println("每个类型的菜的数量: "+typesCount);
+
+
     }
 }
 

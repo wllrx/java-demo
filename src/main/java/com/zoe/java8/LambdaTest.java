@@ -22,7 +22,7 @@ public class LambdaTest {
          */
         //方法引用方式
         str.sort(String::compareToIgnoreCase);
-        System.out.println(str);
+        System.out.println("str的值为: "+str);
 
     }
 
