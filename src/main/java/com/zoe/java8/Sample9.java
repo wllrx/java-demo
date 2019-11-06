@@ -1,10 +1,12 @@
 package com.zoe.java8;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.*;
 
 
 /**
@@ -27,7 +29,7 @@ public class Sample9 {
         long howManyDishes1 = menu.stream().count();
         System.out.println("统计菜单多少菜howManyDishes1: " + howManyDishes1);
 
-        Comparator<Dish> dishCaloriesComparator = Comparator.comparingInt(Dish::getCalories);
+        Comparator<Dish> dishCaloriesComparator = comparingInt(Dish::getCalories);
         System.out.println(dishCaloriesComparator);
         Optional<Dish> mostCalorieDish = menu.stream().collect(Collectors.maxBy(dishCaloriesComparator));
         System.out.println(mostCalorieDish);
@@ -103,8 +105,26 @@ public class Sample9 {
         Map<Dish.Type, Long> typesCount = menu
                 .stream()
                 .collect(groupingBy(Dish::getType, counting()));
-        System.out.println("每个类型的菜的数量: "+typesCount);
-
+        System.out.println("每个类型的菜的数量: " + typesCount);
+        Map<Dish.Type, Optional<Dish>> mostCaloricByType = menu
+                .stream()
+                .collect(groupingBy(Dish::getType, Collectors.maxBy(comparingInt(Dish::getCalories))));
+        System.out.println("每个类型中热量最高的菜: " + mostCaloricByType);
+        Map<Dish.Type, Dish> mostCaloricByType1 = menu
+                .stream()
+                .collect(groupingBy(Dish::getType,
+                        collectingAndThen(
+                                maxBy
+                                        (comparingInt(Dish::getCalories)), Optional::get)));
+        System.out.println(mostCaloricByType1);
+        Map<Dish.Type, Dish> mostCaloricByType2 = menu
+                .stream()
+                .collect(toMap(Dish::getType, Function.identity(), BinaryOperator.maxBy(comparingInt(Dish::getCalories))));
+        System.out.println(mostCaloricByType2);
+        Map<Dish.Type, Integer> totalCaloriesByType = menu
+                .stream()
+                .collect(groupingBy(Dish::getType, summingInt(Dish::getCalories)));
+        System.out.println("每个类型菜热量的总和: " + totalCaloriesByType);
 
     }
 }
