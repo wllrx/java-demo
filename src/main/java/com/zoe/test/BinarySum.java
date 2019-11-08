@@ -17,7 +17,7 @@ public class BinarySum {
         while (i >= 0 || j >= 0) {
             int sum = carry;
             if (i >= 0) {
-                //ASC码48就是'0'，也就是说'0'的值是48，而后依次是'1'到'9'。 这样正好是char型减去48就是它对应的int值
+                //ASC码48就是'0'，'0'的值是48，而后依次是'1'到'9'。 这样正好是char型减去48就是它对应的int值
                 sum += a.charAt(i--) - '0';
             }
             if (j >= 0) {
