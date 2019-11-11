@@ -1,6 +1,5 @@
 package com.zoe.test;
 
-import java.text.DecimalFormat;
 import java.util.stream.IntStream;
 
 /**
@@ -11,7 +10,7 @@ import java.util.stream.IntStream;
 public class DominantIndex {
 
     public static void main(String[] args) {
-        int[] nums = {0, 0, 0, 1};
+        int[] nums = {0,0,1,2};
         int dominantIndex = dominantIndex(nums);
         System.out.println(dominantIndex);
     }
@@ -20,18 +19,18 @@ public class DominantIndex {
         if (nums.length == 0) {
             return -1;
         }
-        DecimalFormat df = new DecimalFormat("0.00");
         int max = IntStream.of(nums).max().getAsInt();
-        String format = df.format((float)max / 2);
         int maxIndex = 0;
         for (int i = 0; i <= nums.length - 1; i++) {
             if (nums[i] == max) {
                 maxIndex = i;
             }
-            if (nums[i] != max && nums[i] < Double.parseDouble(format) && i <= nums.length - 1) {
-                return maxIndex;
+        }
+        for (int i = 0; i <= nums.length-1 ; i++) {
+            if (i != maxIndex && max < nums[i]*2) {
+                return -1;
             }
         }
-        return -1;
+        return maxIndex;
     }
 }
