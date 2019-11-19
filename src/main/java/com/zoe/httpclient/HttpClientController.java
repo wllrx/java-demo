@@ -1,6 +1,7 @@
 package com.zoe.httpclient;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HttpClientController {
 
-    @GetMapping("test")
-    public void test(){
+    @GetMapping("/test")
+    public String test(@RequestBody String fromDate){
         System.out.println("this is ok");
+        return "this is ok";
     }
 }
