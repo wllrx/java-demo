@@ -10,23 +10,20 @@ import java.util.stream.Collectors;
 public class FrequencySort {
 
     public static void main(String[] args) {
-        String s = "Aabb";
+        String s = "aAbb";
         String frequencySort = frequencySort(s);
         System.out.println(frequencySort);
     }
 
     private static String frequencySort(String s) {
         StringBuilder builder = new StringBuilder();
-        TreeMap<String, Long> result = Arrays.stream(s.split(""))
-                .sorted()
-                .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.counting()));
-        List<Map.Entry<String, Long>> list = new ArrayList<Map.Entry<String, Long>>(result.entrySet());
-        list.sort((o1, o2) -> {
-            return o2.getValue().compareTo(o1.getValue());
-        });
-        System.out.println("............."+list);
-        list.forEach(builder::append);
-        result.forEach((k, v) -> {
+        Map<String, Long> result = Arrays.stream(s.split(""))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        Map<String, Long> finalMap = new LinkedHashMap<>(16);
+        result.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue()
+                        .reversed()).forEachOrdered(e -> finalMap.put(e.getKey(), e.getValue()));
+        finalMap.forEach((k, v) -> {
             if (v > 1) {
                 for (int i = 0; i < v; i++) {
                     builder.append(k);
@@ -35,7 +32,6 @@ public class FrequencySort {
                 builder.append(k);
             }
         });
-        System.out.println(result);
         return builder.toString();
     }
 }

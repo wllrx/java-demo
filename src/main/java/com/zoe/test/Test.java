@@ -16,5 +16,6 @@ public class Test {
         System.out.println("a的值为 :"+a);
         int s = Math.min(m, n);
         System.out.println("s的值为: "+ s);
+        
     }
 }
